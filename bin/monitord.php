@@ -24,9 +24,9 @@
 	ini_set('display_startup_errors', 'On');
 	set_time_limit(0);
 
-	require_once __DIR__.'/../../include/functions.inc.php';
-	require_once __DIR__.'/../../include/monitoring/monitoring.functions.inc.php';
-	//include(INCLUDE_ROOT.'/../../billing/billing.functions.inc.php');
+	require_once __DIR__.'/../../../../include/functions.inc.php';
+	require_once __DIR__.'/../../../../include/monitoring/monitoring.functions.inc.php';
+	//include(INCLUDE_ROOT.'/../../../../billing/billing.functions.inc.php');
 
 	global $console;
 	// remove the console coloring
@@ -231,7 +231,7 @@ function sig_handler($signo) {
 			{
 				if (isset($ips[$ip][$service]) && $ips[$ip][$service] == 1)
 				{
-					$cmd = __DIR__ . "/../../files/my/check_{$service} -H {$ip} -t 30";
+					$cmd = __DIR__ . "/nagios/check_{$service} -H {$ip} -t 30";
 					$tservice = $service;
 					if ($service == 'ping')
 					{
@@ -239,9 +239,9 @@ function sig_handler($signo) {
 					}
 					if ($service == 'dns')
 					{
-						$cmd = __DIR__ . "/../../files/my/check_tcp -H {$ip} -p 53";
+						$cmd = __DIR__ . "/nagios/check_tcp -H {$ip} -p 53";
 						$tservice = 'tcp';
-//						$cmd = __DIR__ . "/../../files/my/check_$service -H 127.0.0.1 -s $ip";
+//						$cmd = __DIR__ . "/nagios/check_$service -H 127.0.0.1 -s $ip";
 					}
 					$output = trim(`$cmd`);
 					//echo "CMD:$cmd\nOutput:$output\n";

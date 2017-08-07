@@ -21,8 +21,8 @@
 	ini_set('max_input_time', '0');
 	set_time_limit(0);
 
-	require_once __DIR__.'/../../include/functions.inc.php';
-	require_once __DIR__.'/../../include/monitoring/monitoring.functions.inc.php';
+	require_once __DIR__.'/../../../../include/functions.inc.php';
+	require_once __DIR__.'/../../../../include/monitoring/monitoring.functions.inc.php';
 	//require_once(INCLUDE_ROOT.'/billing/billing.functions.inc.php');
 
 	global $console;
@@ -244,14 +244,14 @@ function sig_handler($signo) {
 			{
 				if (isset($ips[$ip][$service]) && $ips[$ip][$service] == 1)
 				{
-					$cmd = __DIR__ . "/../../files/my/check_{$service} -H {$ip} -t 30";
+					$cmd = __DIR__ . "/nagios/check_{$service} -H {$ip} -t 30";
 					if ($service == 'ping')
 					{
 						$cmd .= ' -w 200.0,80% -c 500.0,100% -p 3';
 					}
 					if ($service == 'dns')
 					{
-						$cmd = __DIR__ . "/../../files/my/check_{$service} -H 127.0.0.1 -s {$ip}";
+						$cmd = __DIR__ . "/nagios/check_{$service} -H 127.0.0.1 -s {$ip}";
 					}
 					$output = trim(`$cmd`);
 					//echo "CMD:$cmd\nOutput:$output\n";
