@@ -6,7 +6,7 @@
 	 *
 	 * Insanely efficient, fast, and accurate monitoring daemon
 	 * @package MyAdmin
-	 * @subpackage Monitoring
+	 * @category Monitoring
 	 * @copyright 2017
 	 * @author $Author: detain $
 	 */
