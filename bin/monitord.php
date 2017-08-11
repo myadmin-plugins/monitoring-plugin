@@ -8,7 +8,7 @@
 	 * @package MyAdmin
 	 * @category Monitoring
 	 * @copyright 2017
-	 * @author $Author: detain $
+	 * @author Joe Huss <detain@interserver.net>
 	 */
 
 	// turn off logging all queries to billingd.log
