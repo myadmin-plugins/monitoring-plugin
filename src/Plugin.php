@@ -50,13 +50,13 @@ class Plugin {
 	 */
 	public static function getRequirements(GenericEvent $event) {
 		$loader = $event->getSubject();
-		$loader->add_requirement('monitoring_stats', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring_stats.php');
+		$loader->add_page_requirement('monitoring_stats', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring_stats.php');
 		$loader->add_requirement('get_umonitored_server_table', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring.functions.inc.php');
 		$loader->add_requirement('get_monitoring_data', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring.functions.inc.php');
-		$loader->add_requirement('website_scan', '/../vendor/detain/myadmin-monitoring-plugin/src/website_scan.php');
+		$loader->add_page_requirement('website_scan', '/../vendor/detain/myadmin-monitoring-plugin/src/website_scan.php');
 		$loader->add_requirement('get_monitoring_services', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring.functions.inc.php');
-		$loader->add_requirement('monitoring', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring.php');
-		$loader->add_requirement('monitoring_setup', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring_setup.php');
+		$loader->add_page_requirement('monitoring', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring.php');
+		$loader->add_page_requirement('monitoring_setup', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring_setup.php');
 	}
 
 	/**
