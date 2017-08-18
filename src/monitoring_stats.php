@@ -72,7 +72,7 @@
 		add_js('echarts');
 		page_title('Monitoring Statistics');
 		$module = get_module_name((isset($GLOBALS['tf']->variables->request['module']) ? $GLOBALS['tf']->variables->request['module'] : 'default'));
-		$settings = get_module_settings($module);
+		$settings = \get_module_settings($module);
 		$db = get_module_db($module);
 		$stats = monitoring_stats_data();
 		//_debug_array($stats);
