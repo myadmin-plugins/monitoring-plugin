@@ -53,7 +53,7 @@
 					'monitoring_extra' => $extra
 				                                         ]
 				           ), __LINE__, __FILE__);
-				$id = $db->get_last_insert_id('monitoring', 'monitoring_id');
+				$id = $db->getLastInsertId('monitoring', 'monitoring_id');
 				$GLOBALS['tf']->redirect($GLOBALS['tf']->link('index.php', 'choice=none.monitoring_setup&amp;id='.$id));
 			} else {
 				dialog('Invalid IP', 'Invalid IP Address');

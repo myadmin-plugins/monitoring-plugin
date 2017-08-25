@@ -53,7 +53,7 @@
 			'rejected' => []
 		];
 		while ($db->next_record(MYSQL_ASSOC)) {
-			$db->Record['signup_date'] = date('Y-m', $db->from_timestamp($db->Record['signup_date']));
+			$db->Record['signup_date'] = date('Y-m', $db->fromTimestamp($db->Record['signup_date']));
 			if (!isset($stats[$db->Record['monitoring_status']][$db->Record['signup_date']]))
 				$stats[$db->Record['monitoring_status']][$db->Record['signup_date']] = 1;
 			else
