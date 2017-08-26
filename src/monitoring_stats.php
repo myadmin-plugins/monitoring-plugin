@@ -113,7 +113,7 @@
 		$smarty->assign('stats', $stats_js);
 		$GLOBALS['tf']->add_html_head_css_file('/css/echarts-carousel.css');
 		$GLOBALS['tf']->add_html_head_css_file('/css/echarts.css');
-		//$GLOBALS['tf']->add_html_head_js('<script src="'.$echart_path.'/doc/asset/js/esl/esl.js"></script>');
+		//$GLOBALS['tf']->add_html_head_js_file(''.$echart_path.'/doc/asset/js/esl/esl.js');
 		//add_output($smarty->fetch('echarts/echarts_editor.tpl'));
 		add_output($smarty->fetch('echarts/echarts_monitoring.tpl'));
 	}
