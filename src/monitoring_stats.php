@@ -111,8 +111,8 @@
 		$smarty->assign('code', $code);
 		//$smarty->assign('stats', json_encode($stats_json));
 		$smarty->assign('stats', $stats_js);
-		$GLOBALS['tf']->add_html_head_css('<link href="/css/echarts-carousel.css" rel="stylesheet">');
-		$GLOBALS['tf']->add_html_head_css('<link href="/css/echarts.css" rel="stylesheet">');
+		$GLOBALS['tf']->add_html_head_css_file('/css/echarts-carousel.css');
+		$GLOBALS['tf']->add_html_head_css_file('/css/echarts.css');
 		//$GLOBALS['tf']->add_html_head_js('<script src="'.$echart_path.'/doc/asset/js/esl/esl.js"></script>');
 		//add_output($smarty->fetch('echarts/echarts_editor.tpl'));
 		add_output($smarty->fetch('echarts/echarts_monitoring.tpl'));
