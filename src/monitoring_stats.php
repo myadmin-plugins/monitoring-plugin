@@ -64,7 +64,7 @@
 
 	function monitoring_stats() {
 		$echart_dir = 'echarts';
-		$echart_path = "//my.interserver.net/bower_components/{$echart_dir}";
+		$echart_path = "/bower_components/{$echart_dir}";
 		add_js('font-awesome');
 		add_js('flot');
 		add_js('bootstrap');
