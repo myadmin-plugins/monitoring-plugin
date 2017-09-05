@@ -13,13 +13,11 @@
 	 * @return array|mixed
 	 */
 	function parse_monitoring_extra($extra) {
-		if ($extra == '') {
+		if ($extra == '')
 			return [];
-		}
 		$ret = myadmin_unstringify(gzuncompress(base64_decode($extra)));
-		if (!is_array($ret)) {
+		if (!is_array($ret))
 			$ret = [];
-		}
 		return $ret;
 	}
 
@@ -137,9 +135,8 @@ SELECT
 		$stats = [];
 		$db->query($data_query, __LINE__, __FILE__);
 		while ($db->next_record(MYSQL_ASSOC)) {
-			if (!isset($stats[$db->Record['ip']])) {
+			if (!isset($stats[$db->Record['ip']]))
 				$stats[$db->Record['ip']] = [];
-			}
 			$stats[$db->Record['ip']][$db->Record['service']] = ['time' => $db->Record['last_time'], 'status' => $db->Record['status']];
 		}
 		$monitoring_data = [];
@@ -155,14 +152,12 @@ SELECT
 					'comment' => $db->Record['monitoring_comment'],
 					'extra' => $extra
 				];
-				if ($GLOBALS['tf']->ima == 'admin') {
+				if ($GLOBALS['tf']->ima == 'admin')
 					$monitor['custid'] = $db->Record['monitoring_custid'];
-				}
 				$myservices = [];
 				foreach ($services as $service) {
-					if (isset($extra[$service]) && $extra[$service] == 1) {
+					if (isset($extra[$service]) && $extra[$service] == 1)
 						$myservices[] = $service;
-					}
 				}
 				$monitor['services'] = $myservices;
 				if (count($myservices) > 0) {
