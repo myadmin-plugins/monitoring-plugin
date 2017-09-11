@@ -432,7 +432,7 @@ function sig_handler($signo) {
 							{
 								$subject = "$ip " . $service . " " . $tstatus;
 							}
-							$msg = $smarty->fetch('email/client_email_monitoring.tpl');
+							$msg = $smarty->fetch('email/client/monitoring.tpl');
 							mail($email, $subject, $msg, $headers);
 							echo "	- Notified $console[GREEN]$email$console[WHITE]\n";
 							$toutput .= "(n $email)";

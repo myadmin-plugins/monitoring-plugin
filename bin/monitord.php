@@ -405,7 +405,7 @@ function sig_handler($signo) {
 							{
 								$subject = "$ip " . $service . ' ' . $tstatus;
 							}
-							$msg = $smarty->fetch('email/client_email_monitoring.tpl');
+							$msg = $smarty->fetch('email/client/monitoring.tpl');
 							//echo "Calling mail($email)\n";
 							$ms = time();
 							mail($email, $subject, $msg, $headers);
