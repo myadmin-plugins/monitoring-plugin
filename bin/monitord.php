@@ -49,9 +49,7 @@ function sig_handler($signo) {
 		elseif ($signo == SIGHUP)
 		{
 			$sighup = true;
-		}
-		else
-		{
+		} else {
 			echo ("Funny signal!\n");
 		}
 	}
@@ -254,9 +252,7 @@ function sig_handler($signo) {
 						//echo "	- $console[BROWN]$service	$console[LIGHTGREEN]Good	$console[LIGHTBLUE]$ip$console[WHITE]\n";
 						$toutput .= "$service(+) ";
 						$status = '1';
-					}
-					else
-					{
+					} else {
 						//							echo "CMD:$console[RED]$cmd$console[WHITE]\nOutput:$console[LIGHTRED]$output$console[WHITE]\n";
 						//							echo "	- $console[BROWN]$service	$console[DARKGRAY]Bad	$console[LIGHTBLUE]$ip$console[WHITE]\n";
 						$toutput .= "$service(-)";
@@ -277,9 +273,7 @@ function sig_handler($signo) {
 						$changed = true;
 						$ochanged = true;
 						++$changes;
-					}
-					else
-					{
+					} else {
 						while ($row = mysqli_fetch_array($result))
 						{
 							/*
@@ -296,9 +290,7 @@ function sig_handler($signo) {
 								if ($status != $ostatus)
 								{
 									$changed = true;
-								}
-								else
-								{
+								} else {
 									$changed = false;
 								}
 								$ochanged = $changed;
@@ -308,9 +300,7 @@ function sig_handler($signo) {
 								if ($status == $ostatus)
 								{
 									++$unchanged_depth;
-								}
-								else
-								{
+								} else {
 									$unchanged_end = true;
 								}
 							}
@@ -338,9 +328,7 @@ function sig_handler($signo) {
 					if ($status == 1)
 					{
 						$tstatus = 'Up';
-					}
-					else
-					{
+					} else {
 						$tstatus = 'Down';
 					}
 					if ($changed > 0 || ($status == 0 && $unchanged_depth < 3))
@@ -400,9 +388,7 @@ function sig_handler($signo) {
 							if ($row['monitoring_hostname'] != '')
 							{
 								$subject = $row['monitoring_hostname'] . ' ' . $service . ' ' . $tstatus;
-							}
-							else
-							{
+							} else {
 								$subject = "$ip " . $service . ' ' . $tstatus;
 							}
 							$msg = $smarty->fetch('email/client/monitoring.tpl');
