@@ -112,7 +112,7 @@ SELECT
 		  FROM
 			monitoring
 		  WHERE
-			monitoring.monitoring_custid='$custid'
+			monitoring.monitoring_custid='{$custid}'
 		  GROUP BY
 			monitoring.monitoring_ip) monitored_ips
 	  LEFT OUTER JOIN monitoring_history
@@ -130,7 +130,7 @@ SELECT
   , monitoring_history.history_timestamp
   , monitoring_history.history_new_value
 ";
-			$monitor_query = "select * from monitoring where monitoring_custid='$custid'";
+			$monitor_query = "select * from monitoring where monitoring_custid='{$custid}'";
 		}
 		$stats = [];
 		$db->query($data_query, __LINE__, __FILE__);

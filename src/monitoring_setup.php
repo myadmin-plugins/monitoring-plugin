@@ -17,9 +17,9 @@
 		$data = $GLOBALS['tf']->accounts->read($custid);
 		$id = (int)$GLOBALS['tf']->variables->request['id'];
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$db->query("select * from monitoring where monitoring_id='$id'");
+			$db->query("select * from monitoring where monitoring_id='{$id}'");
 		} else {
-			$db->query("select * from monitoring where monitoring_id='$id' and monitoring_custid='$custid'");
+			$db->query("select * from monitoring where monitoring_id='{$id}' and monitoring_custid='{$custid}'");
 		}
 		if ($db->num_rows() == 0) {
 			add_output('Invalid Monitoring Item');
@@ -37,7 +37,7 @@
 			foreach ($services as $service)
 				$extra[$service] = $GLOBALS['tf']->variables->request[$service];
 			$extra_string = $db->real_escape(base64_encode(gzcompress(myadmin_stringify($extra))));
-			$db->query("update monitoring set monitoring_hostname='$hostname', monitoring_ip='$ip', monitoring_comment='$comment', monitoring_extra='$extra_string' where monitoring_id=$id");
+			$db->query("update monitoring set monitoring_hostname='{$hostname}', monitoring_ip='{$ip}', monitoring_comment='{$comment}', monitoring_extra='$extra_string' where monitoring_id=$id");
 			$db->query("select * from monitoring where monitoring_id=$id");
 			$db->next_record(MYSQL_ASSOC);
 			add_output('Monitoring Selection Updated');

@@ -302,7 +302,7 @@ function sig_handler($signo) {
 	exit();
 /*
 					// checking previous history for that ip/service
-					$result = mysql_query("select * from monitoring_history where history_section='monitoring_$service' and history_type='$ip' order by history_id desc limit 3");
+					$result = mysql_query("select * from monitoring_history where history_section='monitoring_$service' and history_type='{$ip}' order by history_id desc limit 3");
 					$ostatus = '';
 					$changes = 0;
 					$depth = 1;
@@ -394,7 +394,7 @@ function sig_handler($signo) {
 						$data = $GLOBALS['tf']->accounts->read($custid);
 						if (($changed && $status == 1) || ($status == 0 && $unchanged_depth == 2) || ($status == 0 && $unchanged_depth > 2 && isset($data['notification']) && $data['notification'] == 'every'))
 						{
-							$result = mysql_query("select * from monitoring where monitoring_ip='$ip' and monitoring_custid='$custid'");
+							$result = mysql_query("select * from monitoring where monitoring_ip='{$ip}' and monitoring_custid='{$custid}'");
 							$row = mysql_fetch_array($result, MYSQL_ASSOC);
 							$headers = '';
 							$headers .= "MIME-Version: 1.0" . EMAIL_NEWLINE;

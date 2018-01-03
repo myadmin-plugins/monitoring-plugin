@@ -66,7 +66,7 @@
 			}
 		} else {
 			if (isset($GLOBALS['tf']->variables->request['delete'])) {
-				$db->query("delete from monitoring where monitoring_custid='$custid' and monitoring_id='" . (int)$GLOBALS['tf']->variables->request['id']
+				$db->query("delete from monitoring where monitoring_custid='{$custid}' and monitoring_id='" . (int)$GLOBALS['tf']->variables->request['id']
 				           . "'", __LINE__, __FILE__);
 			}
 		}
