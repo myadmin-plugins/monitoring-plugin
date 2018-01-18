@@ -24,5 +24,5 @@ composer require detain/myadmin-monitoring-plugin
 
 ## License
 
-The Monitoring handling plugin for MyAdmin class is licensed under the LGPL-v2 license.
+The Monitoring handling plugin for MyAdmin class is licensed under the LGPL-v2.1 license.
 
