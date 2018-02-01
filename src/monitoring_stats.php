@@ -68,7 +68,7 @@
 		add_js('font-awesome');
 		add_js('flot');
 		add_js('bootstrap');
-		add_js('require');
+		add_js('requirejs');
 		add_js('echarts');
 		page_title('Monitoring Statistics');
 		$module = get_module_name((isset($GLOBALS['tf']->variables->request['module']) ? $GLOBALS['tf']->variables->request['module'] : 'default'));
