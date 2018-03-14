@@ -43,7 +43,7 @@
 				$ip = $GLOBALS['tf']->variables->request['newip'];
 				$comment = strip_tags($GLOBALS['tf']->variables->request['newcomment']);
 				$extra = [];
-				$extra = $db->real_escape(base64_encode(gzcompress(myadmin_stringify($extra))));
+				$extra = $db->real_escape(myadmin_stringify($extra));
 				$db->query(make_insert_query('monitoring', [
 					'monitoring_id' => null,
 					'monitoring_hostname' => $hostname,
@@ -51,8 +51,8 @@
 					'monitoring_custid' => $custid,
 					'monitoring_comment' => $comment,
 					'monitoring_extra' => $extra
-				                                         ]
-				           ), __LINE__, __FILE__);
+														 ]
+						   ), __LINE__, __FILE__);
 				$id = $db->getLastInsertId('monitoring', 'monitoring_id');
 				$GLOBALS['tf']->redirect($GLOBALS['tf']->link('index.php', 'choice=none.monitoring_setup&amp;id='.$id));
 			} else {
@@ -62,12 +62,12 @@
 		if ($GLOBALS['tf']->ima == 'admin') {
 			if (isset($GLOBALS['tf']->variables->request['delete'])) {
 				$db->query("delete from monitoring where monitoring_id='" . (int)$GLOBALS['tf']->variables->request['id']
-				           . "'", __LINE__, __FILE__);
+						   . "'", __LINE__, __FILE__);
 			}
 		} else {
 			if (isset($GLOBALS['tf']->variables->request['delete'])) {
 				$db->query("delete from monitoring where monitoring_custid='{$custid}' and monitoring_id='" . (int)$GLOBALS['tf']->variables->request['id']
-				           . "'", __LINE__, __FILE__);
+						   . "'", __LINE__, __FILE__);
 			}
 		}
 		add_output(render_form('monitoring_list').'<br>');

@@ -15,7 +15,7 @@
 	function parse_monitoring_extra($extra) {
 		if ($extra == '')
 			return [];
-		$ret = myadmin_unstringify(gzuncompress(base64_decode($extra)));
+		$ret = myadmin_unstringify($extra);
 		if (!is_array($ret))
 			$ret = [];
 		return $ret;
