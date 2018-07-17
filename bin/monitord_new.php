@@ -397,9 +397,9 @@ function sig_handler($signo) {
 							$result = mysql_query("select * from monitoring where monitoring_ip='{$ip}' and monitoring_custid='{$custid}'");
 							$row = mysql_fetch_array($result, MYSQL_ASSOC);
 							$headers = '';
-							$headers .= "MIME-Version: 1.0" . EMAIL_NEWLINE;
-							$headers .= "Content-Type: text/html; charset=UTF-8" . EMAIL_NEWLINE;
-							$headers .= "From: \"My Monitoring\" <monitoring@my.interserver.net>" . EMAIL_NEWLINE;
+							$headers .= "MIME-Version: 1.0" . PHP_EOL;
+							$headers .= "Content-Type: text/html; charset=UTF-8" . PHP_EOL;
+							$headers .= "From: \"My Monitoring\" <monitoring@my.interserver.net>" . PHP_EOL;
 							$smarty = new TFSmarty;
 							$smarty->debugging = true;
 							$smarty->assign('hostname', $row['monitoring_hostname']);
