@@ -36,22 +36,20 @@
 /**
  * @param $signo
  */
-function sig_handler($signo) {
-		global $sigterm;
-		global $sighup;
-		if ($signo == SIGTERM)
-		{
-			$sigterm = true;
-		}
-		elseif ($signo == SIGHUP)
-		{
-			$sighup = true;
-		} else {
-			echo ("Funny signal!\n");
-		}
+function sig_handler($signo)
+{
+	global $sigterm;
+	global $sighup;
+	if ($signo == SIGTERM) {
+		$sigterm = true;
+	} elseif ($signo == SIGHUP) {
+		$sighup = true;
+	} else {
+		echo("Funny signal!\n");
 	}
+}
 
-	declare (ticks = 1);
+	declare(ticks = 1);
 	$wnull = null;
 	$enull = null;
 	$max_children = MONITORING_THREADS;
@@ -95,8 +93,7 @@ function sig_handler($signo) {
 
 	//	mysql_query("select * from monitoring", $dbh);
 	$db->query('select * from monitoring', __line__, __file__);
-	if ($db->num_rows() == 0)
-	{
+	if ($db->num_rows() == 0) {
 		echo "$console[RED]Nothing to monitor$console[WHITE]\n";
 		exit;
 	}
@@ -115,37 +112,30 @@ function sig_handler($signo) {
 
 	$ips = [];
 	// build an array of all the ips and each service we want to monitor on each.
-	while ($db->next_record())
-	{
-		if (!validIp($db->Record['monitoring_ip']))
-		{
+	while ($db->next_record()) {
+		if (!validIp($db->Record['monitoring_ip'])) {
 			//echo "Invlaid IP $ip , skipping\n";
 			continue;
 		}
 		$new = false;
-		if (!isset($ips[$db->Record['monitoring_ip']]))
-		{
+		if (!isset($ips[$db->Record['monitoring_ip']])) {
 			$new = true;
 			$ips[$db->Record['monitoring_ip']] = [];
 			$ips[$db->Record['monitoring_ip']]['notify'] = [];
 		}
 		$extra = parse_monitoring_extra($db->Record['monitoring_extra']);
-		if (isset($extra['email']) && $extra['email'] != '')
-		{
+		if (isset($extra['email']) && $extra['email'] != '') {
 			$ips[$db->Record['monitoring_ip']]['notify'][$db->Record['monitoring_custid']] = $extra['email'];
 		}
 		$found = 0;
-		foreach ($services as $service)
-		{
-			if (isset($extra[$service]) && $extra[$service] == '1')
-			{
+		foreach ($services as $service) {
+			if (isset($extra[$service]) && $extra[$service] == '1') {
 				++$found;
 				$ips[$db->Record['monitoring_ip']][$service] = 1;
 			}
 		}
 		$tfound += $found;
-		if ($new == true && $found == 0)
-		{
+		if ($new == true && $found == 0) {
 			unset($ips[$db->Record['monitoring_ip']]);
 		}
 	}
@@ -156,13 +146,10 @@ function sig_handler($signo) {
 	$ip_keys = array_keys($ips);
 	$offsets = [];
 	$offset = 0;
-	foreach ($ips as $ip => $data)
-	{
+	foreach ($ips as $ip => $data) {
 		$offsets[$ip] = $offset;
-		foreach ($services as $service)
-		{
-			if (isset($data[$service]) && $data[$service] == '1')
-			{
+		foreach ($services as $service) {
+			if (isset($data[$service]) && $data[$service] == '1') {
 				++$offset;
 			}
 		}
@@ -174,48 +161,39 @@ function sig_handler($signo) {
 	$parentpid = posix_getpid();
 	//print_r($ip_keys);
 	// loop until someone sends the program a signal
-	while (!$sighup && !$sigterm)
-	{
+	while (!$sighup && !$sigterm) {
 		// Patiently wait until some of our children die. Make sure we don't use all powers that be.
-		while (pcntl_wait($status, WNOHANG or WUNTRACED) > 0)
-		{
+		while (pcntl_wait($status, WNOHANG or WUNTRACED) > 0) {
 			usleep(1000);
 		}
-		while (list($key, $val) = each($children))
-		{
-			if (!posix_kill($val, 0))
-			{
+		while (list($key, $val) = each($children)) {
+			if (!posix_kill($val, 0)) {
 				unset($children[$key]);
 				--$child;
 			}
 		}
 		$children = array_values($children);
-		if ($child >= $max_children)
-		{
+		if ($child >= $max_children) {
 			usleep(1000);
 			continue;
 		}
 		// Wait for somebody to talk to.
-		if ($x >= count($ip_keys))
-		{
-			if ($child == 0)
-			{
+		if ($x >= count($ip_keys)) {
+			if ($child == 0) {
 				$sigterm = true;
 			}
 			continue;
 		}
 		$ip = $ip_keys[$x];
 		++$x;
-		if (!validIp($ip))
-		{
+		if (!validIp($ip)) {
 			//echo "Invlaid IP $ip , breaking\n";
 			continue;
 		}
 		// Fork a child.
 		++$child;
 		++$totseen;
-		if ($child > $max_childrenseen)
-		{
+		if ($child > $max_childrenseen) {
 			$max_childrenseen = $child;
 		}
 		$pid = pcntl_fork();
@@ -227,8 +205,7 @@ function sig_handler($signo) {
 			// This is the parent. It doesn't do much.
 			$children[] = $pid;
 			usleep(1000);
-		} else
-		{
+		} else {
 			$shm_id = shmop_open($shm_key, 'w', 0644, $shm_size);
 			$offset = $offsets[$ip];
 			//echo "$console[WHITE]Spawned Process $console[BLUE]" . posix_getpid() . "$console[WHITE] To Monitor IP $console[LIGHTBLUE]$ip$console[WHITE]\n";
@@ -238,23 +215,18 @@ function sig_handler($signo) {
 			$console['BLUE'] = '';
 			$toutput = sprintf('%15s   ', $ip);
 			// This is a child. It dies, hopefully.
-			foreach ($services as $service)
-			{
-				if (isset($ips[$ip][$service]) && $ips[$ip][$service] == 1)
-				{
+			foreach ($services as $service) {
+				if (isset($ips[$ip][$service]) && $ips[$ip][$service] == 1) {
 					$cmd = __DIR__ . "/nagios/check_{$service} -H {$ip} -t 30";
-					if ($service == 'ping')
-					{
+					if ($service == 'ping') {
 						$cmd .= ' -w 200.0,80% -c 500.0,100% -p 3';
 					}
-					if ($service == 'dns')
-					{
+					if ($service == 'dns') {
 						$cmd = __DIR__ . "/nagios/check_{$service} -H 127.0.0.1 -s {$ip}";
 					}
 					$output = trim(`$cmd`);
 					//echo "CMD:$cmd\nOutput:$output\n";
-					if (preg_match('/'.mb_strtoupper($service).' OK/', $output) || preg_match('/'.mb_strtoupper($service).' WARNING/', $output))
-					{
+					if (preg_match('/'.mb_strtoupper($service).' OK/', $output) || preg_match('/'.mb_strtoupper($service).' WARNING/', $output)) {
 						//echo "	- $console[BROWN]$service	$console[LIGHTGREEN]Good	$console[LIGHTBLUE]$ip$console[WHITE]\n";
 						$toutput .= "$service(+) ";
 						$status = '1';
@@ -276,18 +248,14 @@ function sig_handler($signo) {
 		}
 	}
 	// Patiently wait until all our children die.
-	while (pcntl_wait($status, WNOHANG or WUNTRACED) > 0)
-	{
+	while (pcntl_wait($status, WNOHANG or WUNTRACED) > 0) {
 		usleep(5000);
 	}
 	// Finally!
-	foreach ($ips as $ip => $data)
-	{
+	foreach ($ips as $ip => $data) {
 		$offset = $offsets[$ip];
-		foreach ($services as $service)
-		{
-			if (isset($data[$service]) && $data[$service] == '1')
-			{
+		foreach ($services as $service) {
+			if (isset($data[$service]) && $data[$service] == '1') {
 				$status = shmop_read($shm_id, $offset, 1);
 				echo "$ip $service $status\n";
 				++$offset;

@@ -9,8 +9,8 @@ use Symfony\Component\EventDispatcher\GenericEvent;
  *
  * @package Detain\MyAdminMonitoring
  */
-class Plugin {
-
+class Plugin
+{
 	public static $name = 'Monitoring Plugin';
 	public static $description = 'Allows handling of Monitoring based Payments through their Payment Processor/Payment System.';
 	public static $help = '';
@@ -19,13 +19,15 @@ class Plugin {
 	/**
 	 * Plugin constructor.
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 	}
 
 	/**
 	 * @return array
 	 */
-	public static function getHooks() {
+	public static function getHooks()
+	{
 		return [
 			//'system.settings' => [__CLASS__, 'getSettings'],
 			//'ui.menu' => [__CLASS__, 'getMenu'],
@@ -36,19 +38,22 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getMenu(GenericEvent $event) {
+	public static function getMenu(GenericEvent $event)
+	{
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
 			function_requirements('has_acl');
-					if (has_acl('client_billing'))
-							$menu->add_link('admin', 'choice=none.abuse_admin', '/lib/webhostinghub-glyphs-icons/icons/development-16/Black/icon-spam.png', 'Monitoring');
+			if (has_acl('client_billing')) {
+				$menu->add_link('admin', 'choice=none.abuse_admin', '/lib/webhostinghub-glyphs-icons/icons/development-16/Black/icon-spam.png', 'Monitoring');
+			}
 		}
 	}
 
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getRequirements(GenericEvent $event) {
+	public static function getRequirements(GenericEvent $event)
+	{
 		$loader = $event->getSubject();
 		$loader->add_page_requirement('monitoring_stats', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring_stats.php');
 		$loader->add_requirement('get_umonitored_server_table', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring.functions.inc.php');
@@ -62,7 +67,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getSettings(GenericEvent $event) {
+	public static function getSettings(GenericEvent $event)
+	{
 		$settings = $event->getSubject();
 		$settings->add_radio_setting('Billing', 'Monitoring', 'paypal_enable', 'Enable Monitoring', 'Enable Monitoring', PAYPAL_ENABLE, [true, false], ['Enabled', 'Disabled']);
 		$settings->add_radio_setting('Billing', 'Monitoring', 'paypal_digitalgoods_enable', 'Enable Digital Goods', 'Enable Digital Goods', PAYPAL_DIGITALGOODS_ENABLE, [true, false], ['Enabled', 'Disabled']);
@@ -74,5 +80,4 @@ class Plugin {
 		$settings->add_text_setting('Billing', 'Monitoring', 'paypal_sandbox_api_password', 'Sandbox API Password', 'Sandbox API Password', (defined('PAYPAL_SANDBOX_API_PASSWORD') ? PAYPAL_SANDBOX_API_PASSWORD : ''));
 		$settings->add_text_setting('Billing', 'Monitoring', 'paypal_sandbox_api_signature', 'Sandbox API Signature', 'Sandbox API Signature', (defined('PAYPAL_SANDBOX_API_SIGNATURE') ? PAYPAL_SANDBOX_API_SIGNATURE : ''));
 	}
-
 }

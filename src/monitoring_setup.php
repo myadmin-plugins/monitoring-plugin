@@ -6,14 +6,16 @@
  * @throws \Exception
  * @throws \SmartyException
  */
-	function monitoring_setup() {
+	function monitoring_setup()
+	{
 		page_title('Monitoring Setup');
 		$db = clone $GLOBALS['tf']->db;
 		$db2 = clone $db;
-		if ($GLOBALS['tf']->ima == 'admin')
+		if ($GLOBALS['tf']->ima == 'admin') {
 			$custid = (int)$GLOBALS['tf']->variables->request['custid'];
-		else
+		} else {
 			$custid = $GLOBALS['tf']->session->account_id;
+		}
 		$data = $GLOBALS['tf']->accounts->read($custid);
 		$id = (int)$GLOBALS['tf']->variables->request['id'];
 		if ($GLOBALS['tf']->ima == 'admin') {
@@ -34,8 +36,9 @@
 			$ip = $db->real_escape($GLOBALS['tf']->variables->request['ip']);
 			$comment = $db->real_escape($GLOBALS['tf']->variables->request['comment']);
 			$extra['email'] = $GLOBALS['tf']->variables->request['email'];
-			foreach ($services as $service)
+			foreach ($services as $service) {
 				$extra[$service] = $GLOBALS['tf']->variables->request[$service];
+			}
 			$extra_string = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update monitoring set monitoring_hostname='{$hostname}', monitoring_ip='{$ip}', monitoring_comment='{$comment}', monitoring_extra='{$extra_string}' where monitoring_id=$id");
 			$db->query("select * from monitoring where monitoring_id=$id");

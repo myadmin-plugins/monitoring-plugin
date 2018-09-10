@@ -7,7 +7,8 @@
 	 * @category Monitoring
 	 */
 
-	function website_scan() {
+	function website_scan()
+	{
 		$table = new TFTable;
 		$table->set_title("Scan website for possible virus's");
 		$table->add_field('Website To Scan');

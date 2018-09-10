@@ -12,19 +12,23 @@
 	 * @param mixed $extra
 	 * @return array|mixed
 	 */
-	function parse_monitoring_extra($extra) {
-		if ($extra == '')
+	function parse_monitoring_extra($extra)
+	{
+		if ($extra == '') {
 			return [];
+		}
 		$ret = myadmin_unstringify($extra);
-		if (!is_array($ret))
+		if (!is_array($ret)) {
 			$ret = [];
+		}
 		return $ret;
 	}
 
 	/**
 	 * @return array
 	 */
-	function get_monitoring_services() {
+	function get_monitoring_services()
+	{
 		$services = [
 			'ping',
 			'http',
@@ -41,7 +45,8 @@
 	/**
 	 * @return array
 	 */
-	function get_monitoring_data() {
+	function get_monitoring_data()
+	{
 		$services = get_monitoring_services();
 		$db = clone $GLOBALS['tf']->db;
 		$db2 = clone $db;
@@ -135,8 +140,9 @@ SELECT
 		$stats = [];
 		$db->query($data_query, __LINE__, __FILE__);
 		while ($db->next_record(MYSQL_ASSOC)) {
-			if (!isset($stats[$db->Record['ip']]))
+			if (!isset($stats[$db->Record['ip']])) {
 				$stats[$db->Record['ip']] = [];
+			}
 			$stats[$db->Record['ip']][$db->Record['service']] = ['time' => $db->Record['last_time'], 'status' => $db->Record['status']];
 		}
 		$monitoring_data = [];
@@ -152,12 +158,14 @@ SELECT
 					'comment' => $db->Record['monitoring_comment'],
 					'extra' => $extra
 				];
-				if ($GLOBALS['tf']->ima == 'admin')
+				if ($GLOBALS['tf']->ima == 'admin') {
 					$monitor['custid'] = $db->Record['monitoring_custid'];
+				}
 				$myservices = [];
 				foreach ($services as $service) {
-					if (isset($extra[$service]) && $extra[$service] == 1)
+					if (isset($extra[$service]) && $extra[$service] == 1) {
 						$myservices[] = $service;
+					}
 				}
 				$monitor['services'] = $myservices;
 				if (count($myservices) > 0) {
@@ -182,7 +190,8 @@ SELECT
 	/**
 	 * @return array
 	 */
-	function get_umonitored_server_list() {
+	function get_umonitored_server_list()
+	{
 		if ($GLOBALS['tf']->ima == 'admin') {
 			if (isset($GLOBALS['tf']->variables->request['custid'])) {
 				$custid = $db->real_escape($GLOBALS['tf']->variables->request['custid']);
@@ -225,7 +234,8 @@ SELECT
  * @throws \Exception
  * @throws \SmartyException
  */
-	function get_umonitored_server_table() {
+	function get_umonitored_server_table()
+	{
 		$unmatched = get_umonitored_server_list();
 		if (count($unmatched) > 0) {
 			$table = new TFTable;

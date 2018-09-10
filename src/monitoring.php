@@ -6,7 +6,8 @@
  * @throws \Exception
  * @throws \SmartyException
  */
-	function monitoring() {
+	function monitoring()
+	{
 		page_title('Server And Software Monitoring And Notifications Section');
 		$db = clone $GLOBALS['tf']->db;
 		$db2 = clone $db;

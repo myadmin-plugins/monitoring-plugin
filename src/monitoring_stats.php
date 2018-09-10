@@ -27,7 +27,8 @@
 	 * )
 	 * @return array array of signups by date in Y-m-d format
 	 */
-	function monitoring_stats_data() {
+	function monitoring_stats_data()
+	{
 		$db = $GLOBALS['tf']->db;
 		function_requirements('has_acl');
 		if ($GLOBALS['tf']->ima == 'admin' && has_acl('client_billing')) {
@@ -54,15 +55,17 @@
 		];
 		while ($db->next_record(MYSQL_ASSOC)) {
 			$db->Record['signup_date'] = date('Y-m', $db->fromTimestamp($db->Record['signup_date']));
-			if (!isset($stats[$db->Record['monitoring_status']][$db->Record['signup_date']]))
+			if (!isset($stats[$db->Record['monitoring_status']][$db->Record['signup_date']])) {
 				$stats[$db->Record['monitoring_status']][$db->Record['signup_date']] = 1;
-			else
+			} else {
 				$stats[$db->Record['monitoring_status']][$db->Record['signup_date']]++;
+			}
 		}
 		return $stats;
 	}
 
-	function monitoring_stats() {
+	function monitoring_stats()
+	{
 		$echart_dir = 'echarts';
 		$echart_path = "/bower_components/{$echart_dir}";
 		add_js('font-awesome');
@@ -79,10 +82,13 @@
 		$stats_json = [];
 		$stats_js = '{';
 		$earliest_date = date('Y-m');
-		foreach ($stats as $status => $stats_data)
-			foreach ($stats_data as $stats_date => $stats_count)
-				if ($stats_date < $earliest_date)
+		foreach ($stats as $status => $stats_data) {
+			foreach ($stats_data as $stats_date => $stats_count) {
+				if ($stats_date < $earliest_date) {
 					$earliest_date = $stats_date;
+				}
+			}
+		}
 		foreach ($stats as $status => $stats_data) {
 			$stats_json[$status] = [];
 			$stats_js .= "'{$status}': [";
@@ -93,12 +99,14 @@
 				$stats_json[$status][] = [$stats_date.'-01 01:01:01', $stats_count, $stats_count];
 				//$stats_json[$status][] = array($stats_date.'-01 01:01:01', $stats_count);
 			}
-			if (mb_substr($stats_js, mb_strlen($stats_js) - 1) == ',')
+			if (mb_substr($stats_js, mb_strlen($stats_js) - 1) == ',') {
 				$stats_js = mb_substr($stats_js, 0, mb_strlen($stats_js) - 1);
+			}
 			$stats_js .= "],\n";
 		}
-		if (mb_substr($stats_js, mb_strlen($stats_js) - 1) == ',')
+		if (mb_substr($stats_js, mb_strlen($stats_js) - 1) == ',') {
 			$stats_js = mb_substr($stats_js, 0, mb_strlen($stats_js) - 1);
+		}
 		$stats_js .= '}';
 		$graph = 1;
 		$code = file_get_contents(INCLUDE_ROOT.'/stats/invoice_payments.js');
