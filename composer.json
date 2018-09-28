@@ -1,5 +1,5 @@
 {
-	"name": "detain/monitoring-plugin",
+	"name": "detain/myadmin-monitoring-plugin",
 	"type": "myadmin-plugin",
 	"description": "Monitoring handling plugin for MyAdmin",
 	"keywords": [
