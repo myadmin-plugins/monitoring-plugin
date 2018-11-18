@@ -75,14 +75,14 @@ class Plugin
          * @var \MyAdmin\Settings $settings
          **/
         $settings = $event->getSubject();
-		$settings->add_radio_setting(__('Billing'), __('Monitoring'), 'paypal_enable', __('Enable Monitoring'), __('Enable Monitoring'), PAYPAL_ENABLE, [true, false], ['Enabled', 'Disabled']);
-		$settings->add_radio_setting(__('Billing'), __('Monitoring'), 'paypal_digitalgoods_enable', __('Enable Digital Goods'), __('Enable Digital Goods'), PAYPAL_DIGITALGOODS_ENABLE, [true, false], ['Enabled', 'Disabled']);
-		$settings->add_text_setting(__('Billing'), __('Monitoring'), 'paypal_email', __('Login / Email '), __('Login / Email '), (defined('PAYPAL_EMAIL') ? PAYPAL_EMAIL : ''));
-		$settings->add_text_setting(__('Billing'), __('Monitoring'), 'paypal_api_username', __('API Username'), __('API Username'), (defined('PAYPAL_API_USERNAME') ? PAYPAL_API_USERNAME : ''));
-		$settings->add_text_setting(__('Billing'), __('Monitoring'), 'paypal_api_password', __('API Password'), __('API Password'), (defined('PAYPAL_API_PASSWORD') ? PAYPAL_API_PASSWORD : ''));
-		$settings->add_text_setting(__('Billing'), __('Monitoring'), 'paypal_api_signature', __('API Signature'), __('API Signature'), (defined('PAYPAL_API_SIGNATURE') ? PAYPAL_API_SIGNATURE : ''));
-		$settings->add_text_setting(__('Billing'), __('Monitoring'), 'paypal_sandbox_api_username', __('Sandbox API Username'), __('Sandbox API Username'), (defined('PAYPAL_SANDBOX_API_USERNAME') ? PAYPAL_SANDBOX_API_USERNAME : ''));
-		$settings->add_text_setting(__('Billing'), __('Monitoring'), 'paypal_sandbox_api_password', __('Sandbox API Password'), __('Sandbox API Password'), (defined('PAYPAL_SANDBOX_API_PASSWORD') ? PAYPAL_SANDBOX_API_PASSWORD : ''));
-		$settings->add_text_setting(__('Billing'), __('Monitoring'), 'paypal_sandbox_api_signature', __('Sandbox API Signature'), __('Sandbox API Signature'), (defined('PAYPAL_SANDBOX_API_SIGNATURE') ? PAYPAL_SANDBOX_API_SIGNATURE : ''));
+		$settings->add_radio_setting(_('Billing'), _('Monitoring'), 'paypal_enable', _('Enable Monitoring'), _('Enable Monitoring'), PAYPAL_ENABLE, [true, false], ['Enabled', 'Disabled']);
+		$settings->add_radio_setting(_('Billing'), _('Monitoring'), 'paypal_digitalgoods_enable', _('Enable Digital Goods'), _('Enable Digital Goods'), PAYPAL_DIGITALGOODS_ENABLE, [true, false], ['Enabled', 'Disabled']);
+		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_email', _('Login / Email '), _('Login / Email '), (defined('PAYPAL_EMAIL') ? PAYPAL_EMAIL : ''));
+		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_api_username', _('API Username'), _('API Username'), (defined('PAYPAL_API_USERNAME') ? PAYPAL_API_USERNAME : ''));
+		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_api_password', _('API Password'), _('API Password'), (defined('PAYPAL_API_PASSWORD') ? PAYPAL_API_PASSWORD : ''));
+		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_api_signature', _('API Signature'), _('API Signature'), (defined('PAYPAL_API_SIGNATURE') ? PAYPAL_API_SIGNATURE : ''));
+		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_sandbox_api_username', _('Sandbox API Username'), _('Sandbox API Username'), (defined('PAYPAL_SANDBOX_API_USERNAME') ? PAYPAL_SANDBOX_API_USERNAME : ''));
+		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_sandbox_api_password', _('Sandbox API Password'), _('Sandbox API Password'), (defined('PAYPAL_SANDBOX_API_PASSWORD') ? PAYPAL_SANDBOX_API_PASSWORD : ''));
+		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_sandbox_api_signature', _('Sandbox API Signature'), _('Sandbox API Signature'), (defined('PAYPAL_SANDBOX_API_SIGNATURE') ? PAYPAL_SANDBOX_API_SIGNATURE : ''));
 	}
 }
