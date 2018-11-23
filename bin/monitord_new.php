@@ -6,7 +6,7 @@
 	 * Insanely efficient, fast, and accurate monitoring daemon
 	 * @package MyAdmin
 	 * @category Monitoring
-	 * @copyright 2018
+	 * @copyright 2019
 	 * @author Joe Huss <detain@interserver.net>
 	 */
 
