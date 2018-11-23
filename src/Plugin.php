@@ -77,7 +77,7 @@ class Plugin
         $settings = $event->getSubject();
 		$settings->add_radio_setting(_('Billing'), _('Monitoring'), 'paypal_enable', _('Enable Monitoring'), _('Enable Monitoring'), PAYPAL_ENABLE, [true, false], ['Enabled', 'Disabled']);
 		$settings->add_radio_setting(_('Billing'), _('Monitoring'), 'paypal_digitalgoods_enable', _('Enable Digital Goods'), _('Enable Digital Goods'), PAYPAL_DIGITALGOODS_ENABLE, [true, false], ['Enabled', 'Disabled']);
-		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_email', _('Login / Email '), _('Login / Email '), (defined('PAYPAL_EMAIL') ? PAYPAL_EMAIL : ''));
+		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_email', _('Login Email'), _('Login Email'), (defined('PAYPAL_EMAIL') ? PAYPAL_EMAIL : ''));
 		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_api_username', _('API Username'), _('API Username'), (defined('PAYPAL_API_USERNAME') ? PAYPAL_API_USERNAME : ''));
 		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_api_password', _('API Password'), _('API Password'), (defined('PAYPAL_API_PASSWORD') ? PAYPAL_API_PASSWORD : ''));
 		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_api_signature', _('API Signature'), _('API Signature'), (defined('PAYPAL_API_SIGNATURE') ? PAYPAL_API_SIGNATURE : ''));
