@@ -45,7 +45,9 @@
 				$comment = strip_tags($GLOBALS['tf']->variables->request['newcomment']);
 				$extra = [];
 				$extra = $db->real_escape(myadmin_stringify($extra));
-				$db->query(make_insert_query('monitoring', [
+				$db->query(make_insert_query(
+					'monitoring',
+					[
 					'monitoring_id' => null,
 					'monitoring_hostname' => $hostname,
 					'monitoring_ip' => $ip,

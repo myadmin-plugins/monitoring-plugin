@@ -251,8 +251,10 @@ SELECT
 				$table->add_field();
 				$table->add_field($values['title'], 'r');
 				$table->add_field();
-				$table->add_field($table->make_link('choice=none.monitoring&amp;hostname='.$values['title'].'&amp;ip='.$values['ip'].'&amp;comment='.$values['module'].'&amp;custid='.$values['custid'],
-					'Add To Monitoring'));
+				$table->add_field($table->make_link(
+					'choice=none.monitoring&amp;hostname='.$values['title'].'&amp;ip='.$values['ip'].'&amp;comment='.$values['module'].'&amp;custid='.$values['custid'],
+					'Add To Monitoring'
+				));
 				$table->add_row();
 			}
 			return $table->get_table();

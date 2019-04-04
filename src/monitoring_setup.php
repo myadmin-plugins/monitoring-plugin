@@ -72,8 +72,11 @@
 		$table->add_row();
 		$services = get_monitoring_services();
 		foreach ($services as $service) {
-			$db2->query("select * from monitoring_history where history_type='" . $db->real_escape($db->Record['monitoring_ip']) . "' and history_section='monitoring_$service' order by history_id desc limit 1",
-				__LINE__, __FILE__);
+			$db2->query(
+				"select * from monitoring_history where history_type='" . $db->real_escape($db->Record['monitoring_ip']) . "' and history_section='monitoring_$service' order by history_id desc limit 1",
+				__LINE__,
+				__FILE__
+			);
 			$table->add_field($service, 'r');
 			//$table->add_field('<select name="'.$service.'"><option value=0>No</option><option '.(isset($extra[$service]) && $extra[$service] == '1' ? 'selected' : '').' value=1>Yes</option></select>');
 			$table->add_field('<input type="radio" name="'.$service.'" value="0" '.(!isset($extra[$service]) || $extra[$service] != '1' ? 'checked' : '').'>No <input type="radio" name="'.$service .

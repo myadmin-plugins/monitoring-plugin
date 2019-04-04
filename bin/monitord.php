@@ -295,7 +295,9 @@ function sig_handler($signo)
 						$tstatus = 'Down';
 					}
 					if ($changed > 0 || ($status == 0 && $unchanged_depth < 3)) {
-						$query = make_insert_query('monitoring_history', [
+						$query = make_insert_query(
+							'monitoring_history',
+							[
 							'history_id' => null,
 							'history_timestamp' => mysql_now(),
 							'history_section' => 'monitoring_'.$service,

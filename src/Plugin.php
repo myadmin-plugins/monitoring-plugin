@@ -43,8 +43,8 @@ class Plugin
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
 			function_requirements('has_acl');
-            if (has_acl('client_billing')) {
-            }
+			if (has_acl('client_billing')) {
+			}
 		}
 	}
 
@@ -53,10 +53,10 @@ class Plugin
 	 */
 	public static function getRequirements(GenericEvent $event)
 	{
-        /**
-         * @var \MyAdmin\Plugins\Loader $this->loader
-         */
-        $loader = $event->getSubject();
+		/**
+		 * @var \MyAdmin\Plugins\Loader $this->loader
+		 */
+		$loader = $event->getSubject();
 		$loader->add_page_requirement('monitoring_stats', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring_stats.php');
 		$loader->add_requirement('get_umonitored_server_table', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring.functions.inc.php');
 		$loader->add_requirement('get_monitoring_data', '/../vendor/detain/myadmin-monitoring-plugin/src/monitoring.functions.inc.php');
@@ -69,12 +69,12 @@ class Plugin
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-    public static function getSettings(GenericEvent $event)
-    {
-        /**
-         * @var \MyAdmin\Settings $settings
-         **/
-        $settings = $event->getSubject();
+	public static function getSettings(GenericEvent $event)
+	{
+		/**
+		 * @var \MyAdmin\Settings $settings
+		 **/
+		$settings = $event->getSubject();
 		$settings->add_radio_setting(_('Billing'), _('Monitoring'), 'paypal_enable', _('Enable Monitoring'), _('Enable Monitoring'), PAYPAL_ENABLE, [true, false], ['Enabled', 'Disabled']);
 		$settings->add_radio_setting(_('Billing'), _('Monitoring'), 'paypal_digitalgoods_enable', _('Enable Digital Goods'), _('Enable Digital Goods'), PAYPAL_DIGITALGOODS_ENABLE, [true, false], ['Enabled', 'Disabled']);
 		$settings->add_text_setting(_('Billing'), _('Monitoring'), 'paypal_email', _('Login Email'), _('Login Email'), (defined('PAYPAL_EMAIL') ? PAYPAL_EMAIL : ''));
