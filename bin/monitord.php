@@ -333,11 +333,6 @@ while (!$sighup && !$sigterm) {
 					if (($unchanged_depth == 2) || ($status == 0 && $unchanged_depth > 2 && $notification == 'every')) {
 						$result = mysqli_query($dbh, "select * from monitoring where monitoring_ip='{$ip}' and monitoring_custid='{$custid}'");
 						$row = mysqli_fetch_array($result, MYSQL_ASSOC);
-						$headers = '';
-						$headers .= 'MIME-Version: 1.0' . PHP_EOL;
-						$headers .= 'Content-Type: text/html; charset=UTF-8' . PHP_EOL;
-						$headers .= 'From: "My Monitoring" <monitoring@my.interserver.net>' . PHP_EOL;
-
 						$smarty = new TFSmarty;
 						$smarty->debugging = true;
 						$smarty->assign('hostname', $row['monitoring_hostname']);
@@ -354,7 +349,7 @@ while (!$sighup && !$sigterm) {
 						$msg = $smarty->fetch('email/client/monitoring.tpl');
 						//echo "Calling mail($email)\n";
 						$ms = time();
-						mail($email, $subject, $msg, $headers);
+						(new \MyAdmin\Mail())->clientMail($subject, $msg, $email, 'client/monitoring.tpl');
 						$me = time();
 						//echo "	- Notified $console[GREEN]$email$console[WHITE]  " . ($me - $ms) . " seconds\n";
 						$toutput .= "(n $email " . ($me - $ms) . 's)';

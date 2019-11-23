@@ -383,7 +383,7 @@ $subject = $row['monitoring_hostname'] . " " . $service . " " . $tstatus;
 $subject = "$ip " . $service . " " . $tstatus;
 }
 $msg = $smarty->fetch('email/client/monitoring.tpl');
-mail($email, $subject, $msg, $headers);
+(new \MyAdmin\Mail())->clientMail($subject, $msg, $email, 'client/monitoring.tpl');
 echo "	- Notified $console[GREEN]$email$console[WHITE]\n";
 $toutput .= "(n $email)";
 }
