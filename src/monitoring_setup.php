@@ -8,6 +8,7 @@
  */
 	function monitoring_setup()
 	{
+		return false;
 		page_title('Monitoring Setup');
 		$db = clone $GLOBALS['tf']->db;
 		$db2 = clone $db;
