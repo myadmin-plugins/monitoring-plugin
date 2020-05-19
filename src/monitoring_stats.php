@@ -67,7 +67,7 @@
 	function monitoring_stats()
 	{
 		$echart_dir = 'echarts';
-		$echart_path = "/bower_components/{$echart_dir}";
+		$echart_path = "/lib/{$echart_dir}";
 		add_js('font-awesome');
 		add_js('flot');
 		add_js('bootstrap');
