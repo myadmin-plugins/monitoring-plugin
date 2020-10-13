@@ -1,2 +1,0 @@
-apt-get install libradiusclient-ng2 libradiusclient-ng-dev libnet-snmp-perl dnsutils smbclient fping
-
