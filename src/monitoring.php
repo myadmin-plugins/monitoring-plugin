@@ -33,7 +33,7 @@
         $table->csrf('monitoring');
         $table->set_title('Monitoring Options');
         $table->add_field('Downed Notification');
-        $table->add_field(build_select('notification', $notifications, (isset($data['notification']) ? $data['notification'] : '')));
+        $table->add_field(build_select('notification', $notifications, ($data['notification'] ?? '')));
         $table->add_row();
         $table->set_colspan(2);
         $table->add_field($table->make_submit('Update Monitoring Options'));

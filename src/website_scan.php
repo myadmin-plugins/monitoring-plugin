@@ -13,7 +13,7 @@
         $table = new TFTable();
         $table->set_title("Scan website for possible virus's");
         $table->add_field('Website To Scan');
-        $table->add_field($table->make_input('website', (isset($GLOBALS['tf']->variables->request['website']) ? $GLOBALS['tf']->variables->request['website'] : ''), 40));
+        $table->add_field($table->make_input('website', ($GLOBALS['tf']->variables->request['website'] ?? ''), 40));
         $table->add_field($table->make_submit('Scan'));
         $table->add_row();
         add_output($table->get_table());

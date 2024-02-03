@@ -156,7 +156,7 @@ while (!$sighup && !$sigterm) {
     while (pcntl_wait($status, WNOHANG or WUNTRACED) > 0) {
         usleep(1000);
     }
-    while (list($key, $val) = each($children)) {
+    while ([$key, $val] = each($children)) {
         if (!posix_kill($val, 0)) {
             unset($children[$key]);
             --$child;
