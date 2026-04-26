@@ -66,8 +66,8 @@ $response = '';
 
 $webpage = false;
 
-//	$GLOBALS['tf']->session->create(160307,'services', false);
-//	$GLOBALS['tf']->session->verify();
+//	\MyAdmin\App::session()->create(160307,'services', false);
+//	\MyAdmin\App::session()->verify();
 
 pcntl_signal(SIGTERM, 'sig_handler');
 pcntl_signal(SIGHUP, 'sig_handler');
@@ -359,7 +359,7 @@ $toutput .= "(c)";
 }
 foreach ($ips[$ip]['notify'] as $custid => $email)
 {
-$data = $GLOBALS['tf']->accounts->read($custid);
+$data = \MyAdmin\App::accounts()->read($custid);
 if (($changed && $status == 1) || ($status == 0 && $unchanged_depth == 2) || ($status == 0 && $unchanged_depth > 2 && isset($data['notification']) && $data['notification'] == 'every'))
 {
 $result = mysql_query("select * from monitoring where monitoring_ip='{$ip}' and monitoring_custid='{$custid}'");
@@ -375,7 +375,7 @@ $smarty->assign('url', 'my.interserver.net');
 $smarty->assign('ip', $ip);
 $smarty->assign('status', $tstatus);
 $smarty->assign('service', $service);
-$smarty->assign('username', $GLOBALS['tf']->accounts->cross_reference($custid));
+$smarty->assign('username', \MyAdmin\App::accounts()->cross_reference($custid));
 if ($row['monitoring_hostname'] != '')
 {
 $subject = $row['monitoring_hostname'] . " " . $service . " " . $tstatus;

@@ -10,16 +10,16 @@
     {
         return false;
         page_title('Monitoring Setup');
-        $db = clone $GLOBALS['tf']->db;
+        $db = clone \MyAdmin\App::db();
         $db2 = clone $db;
-        if ($GLOBALS['tf']->ima == 'admin') {
-            $custid = (int)$GLOBALS['tf']->variables->request['custid'];
+        if (\MyAdmin\App::ima() == 'admin') {
+            $custid = (int)\MyAdmin\App::variables()->request['custid'];
         } else {
-            $custid = $GLOBALS['tf']->session->account_id;
+            $custid = \MyAdmin\App::session()->account_id;
         }
-        $data = $GLOBALS['tf']->accounts->read($custid);
-        $id = (int)$GLOBALS['tf']->variables->request['id'];
-        if ($GLOBALS['tf']->ima == 'admin') {
+        $data = \MyAdmin\App::accounts()->read($custid);
+        $id = (int)\MyAdmin\App::variables()->request['id'];
+        if (\MyAdmin\App::ima() == 'admin') {
             $db->query("select * from monitoring where monitoring_id='{$id}'");
         } else {
             $db->query("select * from monitoring where monitoring_id='{$id}' and monitoring_custid='{$custid}'");
@@ -32,20 +32,20 @@
         $services = get_monitoring_services();
         $db->next_record(MYSQL_ASSOC);
         $extra = parse_monitoring_extra($db->Record['monitoring_extra']);
-        if (isset($GLOBALS['tf']->variables->request['hostname']) && verify_csrf('monitoring_setup')) {
-            $hostname = $db->real_escape($GLOBALS['tf']->variables->request['hostname']);
-            $ip = $db->real_escape($GLOBALS['tf']->variables->request['ip']);
-            $comment = $db->real_escape($GLOBALS['tf']->variables->request['comment']);
-            $extra['email'] = $GLOBALS['tf']->variables->request['email'];
+        if (isset(\MyAdmin\App::variables()->request['hostname']) && verify_csrf('monitoring_setup')) {
+            $hostname = $db->real_escape(\MyAdmin\App::variables()->request['hostname']);
+            $ip = $db->real_escape(\MyAdmin\App::variables()->request['ip']);
+            $comment = $db->real_escape(\MyAdmin\App::variables()->request['comment']);
+            $extra['email'] = \MyAdmin\App::variables()->request['email'];
             foreach ($services as $service) {
-                $extra[$service] = $GLOBALS['tf']->variables->request[$service];
+                $extra[$service] = \MyAdmin\App::variables()->request[$service];
             }
             $extra_string = $db->real_escape(myadmin_stringify($extra));
             $db->query("update monitoring set monitoring_hostname='{$hostname}', monitoring_ip='{$ip}', monitoring_comment='{$comment}', monitoring_extra='{$extra_string}' where monitoring_id=$id");
             $db->query("select * from monitoring where monitoring_id=$id");
             $db->next_record(MYSQL_ASSOC);
             add_output('Monitoring Selection Updated');
-            $GLOBALS['tf']->redirect($GLOBALS['tf']->link('index.php', 'choice=none.monitoring'));
+            \MyAdmin\App::output()->redirect(\MyAdmin\App::link('index.php', 'choice=none.monitoring'));
         }
         $table = new TFTable();
         $table->add_hidden('id', $id);

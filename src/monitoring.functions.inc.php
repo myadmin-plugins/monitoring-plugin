@@ -49,19 +49,19 @@
     function get_monitoring_data()
     {
         $services = get_monitoring_services();
-        $db = clone $GLOBALS['tf']->db;
+        $db = clone \MyAdmin\App::db();
         $db2 = clone $db;
-        if ($GLOBALS['tf']->ima == 'admin') {
-            if (isset($GLOBALS['tf']->variables->request['custid'])) {
-                $custid = $db->real_escape($GLOBALS['tf']->variables->request['custid']);
+        if (\MyAdmin\App::ima() == 'admin') {
+            if (isset(\MyAdmin\App::variables()->request['custid'])) {
+                $custid = $db->real_escape(\MyAdmin\App::variables()->request['custid']);
             } else {
-                $custid = $GLOBALS['tf']->session->account_id;
+                $custid = \MyAdmin\App::session()->account_id;
             }
         } else {
-            $custid = $GLOBALS['tf']->session->account_id;
+            $custid = \MyAdmin\App::session()->account_id;
         }
-        $data = $GLOBALS['tf']->accounts->read($custid);
-        if ($GLOBALS['tf']->ima == 'admin') {
+        $data = \MyAdmin\App::accounts()->read($custid);
+        if (\MyAdmin\App::ima() == 'admin') {
             $data_query = "
 SELECT
   substr(monitoring_history.history_section, 12) AS service
@@ -159,7 +159,7 @@ SELECT
                     'comment' => $db->Record['monitoring_comment'],
                     'extra' => $extra
                 ];
-                if ($GLOBALS['tf']->ima == 'admin') {
+                if (\MyAdmin\App::ima() == 'admin') {
                     $monitor['custid'] = $db->Record['monitoring_custid'];
                 }
                 $myservices = [];
@@ -193,20 +193,20 @@ SELECT
      */
     function get_umonitored_server_list()
     {
-        if ($GLOBALS['tf']->ima == 'admin') {
-            if (isset($GLOBALS['tf']->variables->request['custid'])) {
-                $custid = $db->real_escape($GLOBALS['tf']->variables->request['custid']);
+        if (\MyAdmin\App::ima() == 'admin') {
+            if (isset(\MyAdmin\App::variables()->request['custid'])) {
+                $custid = $db->real_escape(\MyAdmin\App::variables()->request['custid']);
             } else {
-                $custid = $GLOBALS['tf']->session->account_id;
+                $custid = \MyAdmin\App::session()->account_id;
             }
         } else {
-            $custid = $GLOBALS['tf']->session->account_id;
+            $custid = \MyAdmin\App::session()->account_id;
         }
         $unmatched = [];
         foreach ($GLOBALS['modules'] as $module => $settings) {
             $db = get_module_db($module);
             if (preg_match('/_ip$/', $settings['TITLE_FIELD']) || preg_match('/_ip$/', $settings['TITLE_FIELD'])) {
-                //			if ($GLOBALS['tf']->ima == 'admin')
+                //			if (\MyAdmin\App::ima() == 'admin')
                 //			{
                 //				$db->query("select * from $settings[TABLE] where $settings[PREFIX]_status='active'");
                 //			}

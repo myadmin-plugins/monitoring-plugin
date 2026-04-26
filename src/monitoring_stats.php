@@ -30,17 +30,17 @@
      */
     function monitoring_stats_data()
     {
-        $db = $GLOBALS['tf']->db;
+        $db = \MyAdmin\App::db();
         function_requirements('has_acl');
-        if ($GLOBALS['tf']->ima == 'admin' && has_acl('client_billing')) {
-            if (isset($GLOBALS['tf']->variables->request['custid'])) {
-                $custid = (int)$GLOBALS['tf']->variables->request['custid'];
+        if (\MyAdmin\App::ima() == 'admin' && has_acl('client_billing')) {
+            if (isset(\MyAdmin\App::variables()->request['custid'])) {
+                $custid = (int)\MyAdmin\App::variables()->request['custid'];
                 $query = "select monitoring_status, (select history_timestamp from monitoring_history where history_owner=monitoring_custid limit 1) as signup_date from affiliates where monitoring_owner={$custid} order by signup_date";
             } else {
                 $query = 'select monitoring_status, (select history_timestamp from monitoring_history where history_owner=monitoring_custid limit 1) as signup_date from affiliates where monitoring_owner > 0 order by signup_date';
             }
         } else {
-            $custid = $GLOBALS['tf']->session->account_id;
+            $custid = \MyAdmin\App::session()->account_id;
             $query = "select monitoring_status, (select history_timestamp from monitoring_history where history_owner=monitoring_custid limit 1) as signup_date from affiliates where monitoring_owner={$custid} order by signup_date";
         }
         $db->query($query, __LINE__, __FILE__);
@@ -75,7 +75,7 @@
         add_js('requirejs');
         add_js('echarts');
         page_title('Monitoring Statistics');
-        $module = get_module_name(($GLOBALS['tf']->variables->request['module'] ?? 'default'));
+        $module = get_module_name((\MyAdmin\App::variables()->request['module'] ?? 'default'));
         $settings = \get_module_settings($module);
         $db = get_module_db($module);
         $stats = monitoring_stats_data();
@@ -120,9 +120,9 @@
         $smarty->assign('code', $code);
         //$smarty->assign('stats', json_encode($stats_json));
         $smarty->assign('stats', $stats_js);
-        $GLOBALS['tf']->add_html_head_css_file('/css/echarts-carousel.css');
-        $GLOBALS['tf']->add_html_head_css_file('/css/echarts.css');
-        //$GLOBALS['tf']->add_html_head_js_file($echart_path.'/doc/asset/js/esl/esl.js');
+        \MyAdmin\App::output()->addHeadCssFile('/css/echarts-carousel.css');
+        \MyAdmin\App::output()->addHeadCssFile('/css/echarts.css');
+        //\MyAdmin\App::output()->addHeadJsFile($echart_path.'/doc/asset/js/esl/esl.js');
         //add_output($smarty->fetch('echarts/echarts_editor.tpl'));
         add_output($smarty->fetch('echarts/echarts_monitoring.tpl'));
     }

@@ -69,8 +69,8 @@ $response = '';
 
 $webpage = false;
 
-//	$GLOBALS['tf']->session->create(160307,'services',false);
-//	$GLOBALS['tf']->session->verify();
+//	\MyAdmin\App::session()->create(160307,'services',false);
+//	\MyAdmin\App::session()->verify();
 
 pcntl_signal(SIGTERM, 'sig_handler');
 pcntl_signal(SIGHUP, 'sig_handler');

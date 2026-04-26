@@ -13,14 +13,14 @@
         $table = new TFTable();
         $table->set_title("Scan website for possible virus's");
         $table->add_field('Website To Scan');
-        $table->add_field($table->make_input('website', ($GLOBALS['tf']->variables->request['website'] ?? ''), 40));
+        $table->add_field($table->make_input('website', (\MyAdmin\App::variables()->request['website'] ?? ''), 40));
         $table->add_field($table->make_submit('Scan'));
         $table->add_row();
         add_output($table->get_table());
-        if (isset($GLOBALS['tf']->variables->request['website'])) {
+        if (isset(\MyAdmin\App::variables()->request['website'])) {
             $table = new TFTable();
-            $table->set_title('Scan result for '.$GLOBALS['tf']->variables->request['website']);
-            $serialized_data = getcurlpage('http://sitecheck.sucuri.net/scanner/?scan='.urlencode($GLOBALS['tf']->variables->request['website']).'&serialized&interserver.net');
+            $table->set_title('Scan result for '.\MyAdmin\App::variables()->request['website']);
+            $serialized_data = getcurlpage('http://sitecheck.sucuri.net/scanner/?scan='.urlencode(\MyAdmin\App::variables()->request['website']).'&serialized&interserver.net');
             //print_r($serialized_data);
             $data = myadmin_unstringify($serialized_data);
             //echo '<pre>';print_r($data);echo '</pre>';

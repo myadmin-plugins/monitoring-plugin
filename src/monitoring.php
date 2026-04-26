@@ -10,23 +10,23 @@
     {
         return false;
         page_title('Server And Software Monitoring And Notifications Section');
-        $db = clone $GLOBALS['tf']->db;
+        $db = clone \MyAdmin\App::db();
         $db2 = clone $db;
-        if ($GLOBALS['tf']->ima == 'admin') {
-            if (isset($GLOBALS['tf']->variables->request['custid'])) {
-                $custid = $db->real_escape($GLOBALS['tf']->variables->request['custid']);
+        if (\MyAdmin\App::ima() == 'admin') {
+            if (isset(\MyAdmin\App::variables()->request['custid'])) {
+                $custid = $db->real_escape(\MyAdmin\App::variables()->request['custid']);
             } else {
-                $custid = $GLOBALS['tf']->session->account_id;
+                $custid = \MyAdmin\App::session()->account_id;
             }
         } else {
-            $custid = $GLOBALS['tf']->session->account_id;
+            $custid = \MyAdmin\App::session()->account_id;
         }
-        $data = $GLOBALS['tf']->accounts->read($custid);
+        $data = \MyAdmin\App::accounts()->read($custid);
         $notifications = ['once' => 'Only let me know once when a server is down until it is back up.', 'every' => 'Keep letting me know the server is down until its back up'];
-        if (isset($GLOBALS['tf']->variables->request['notification']) && verify_csrf('monitoring')) {
-            $notification = $db->real_escape($GLOBALS['tf']->variables->request['notification']);
-            $GLOBALS['tf']->accounts->update($custid, ['notification' => $notification]);
-            $data = $GLOBALS['tf']->accounts->read($custid);
+        if (isset(\MyAdmin\App::variables()->request['notification']) && verify_csrf('monitoring')) {
+            $notification = $db->real_escape(\MyAdmin\App::variables()->request['notification']);
+            \MyAdmin\App::accounts()->update($custid, ['notification' => $notification]);
+            $data = \MyAdmin\App::accounts()->read($custid);
             dialog('Setting Updated', 'You have updated your Monitoring Notification settings to: '.$notifications[$notification]);
         }
         $table = new TFTable();
@@ -39,11 +39,11 @@
         $table->add_field($table->make_submit('Update Monitoring Options'));
         $table->add_row();
         add_output($table->get_table().'<br>');
-        if (isset($GLOBALS['tf']->variables->request['newip'])) {
-            if (validIp($GLOBALS['tf']->variables->request['newip'])) {
-                $hostname = strip_tags($GLOBALS['tf']->variables->request['newhostname']);
-                $ip = $GLOBALS['tf']->variables->request['newip'];
-                $comment = strip_tags($GLOBALS['tf']->variables->request['newcomment']);
+        if (isset(\MyAdmin\App::variables()->request['newip'])) {
+            if (validIp(\MyAdmin\App::variables()->request['newip'])) {
+                $hostname = strip_tags(\MyAdmin\App::variables()->request['newhostname']);
+                $ip = \MyAdmin\App::variables()->request['newip'];
+                $comment = strip_tags(\MyAdmin\App::variables()->request['newcomment']);
                 $extra = [];
                 $extra = $db->real_escape(myadmin_stringify($extra));
                 $db->query(make_insert_query(
@@ -58,19 +58,19 @@
                                                          ]
                 ), __LINE__, __FILE__);
                 $id = $db->getLastInsertId('monitoring', 'monitoring_id');
-                $GLOBALS['tf']->redirect($GLOBALS['tf']->link('index.php', 'choice=none.monitoring_setup&amp;id='.$id));
+                \MyAdmin\App::output()->redirect(\MyAdmin\App::link('index.php', 'choice=none.monitoring_setup&amp;id='.$id));
             } else {
                 dialog('Invalid IP', 'Invalid IP Address');
             }
         }
-        if ($GLOBALS['tf']->ima == 'admin') {
-            if (isset($GLOBALS['tf']->variables->request['delete'])) {
-                $db->query("delete from monitoring where monitoring_id='" . (int)$GLOBALS['tf']->variables->request['id']
+        if (\MyAdmin\App::ima() == 'admin') {
+            if (isset(\MyAdmin\App::variables()->request['delete'])) {
+                $db->query("delete from monitoring where monitoring_id='" . (int)\MyAdmin\App::variables()->request['id']
                            . "'", __LINE__, __FILE__);
             }
         } else {
-            if (isset($GLOBALS['tf']->variables->request['delete'])) {
-                $db->query("delete from monitoring where monitoring_custid='{$custid}' and monitoring_id='" . (int)$GLOBALS['tf']->variables->request['id']
+            if (isset(\MyAdmin\App::variables()->request['delete'])) {
+                $db->query("delete from monitoring where monitoring_custid='{$custid}' and monitoring_id='" . (int)\MyAdmin\App::variables()->request['id']
                            . "'", __LINE__, __FILE__);
             }
         }
