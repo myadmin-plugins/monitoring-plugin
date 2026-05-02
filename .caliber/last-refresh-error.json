@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-04-10T01:42:55.137Z",
+  "error": "Claude CLI exited with code 1. Not logged in · Please run /login",
+  "stack": "Error: Claude CLI exited with code 1. Not logged in · Please run /login\n    at ChildProcess.<anonymous> (file:///home/my/.nvm/versions/node/v22.22.2/lib/node_modules/@rely-ai/caliber/dist/bin.js:2866:18)\n    at ChildProcess.emit (node:events:519:28)\n    at maybeClose (node:internal/child_process:1101:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:304:5)",
+  "cwd": "/home/sites/mystage/vendor/detain/myadmin-monitoring-plugin",
+  "nodeVersion": "v22.22.2"
+}
