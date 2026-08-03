@@ -116,12 +116,34 @@ class MonitoringSetupTest extends TestCase
     }
 
     /**
-     * Test that monitoring_setup differentiates admin and non-admin queries.
+     * Test that monitoring_setup() is inert: it touches no database and renders nothing.
+     *
+     * This replaces a grep for the literal text "ima == 'admin'". That grep asserted
+     * nothing about enforcement — it would have passed on a commented-out gate — and it
+     * broke as soon as the page moved from $GLOBALS['tf']->ima to \MyAdmin\App::ima()
+     * while the gate was still fully intact (src/monitoring_setup.php lines 15 and
+     * 22-26).
+     *
+     * The gate cannot be reached from a test because monitoring_setup() opens with an
+     * unconditional `return false;` (line 11), so the whole body is dead code. What is
+     * actually observable, and what this asserts, is that the page is disabled: it
+     * returns false without querying the monitoring tables or emitting any output, so
+     * it can neither serve nor leak data. The live admin/non-admin scoping rule this
+     * page would apply is covered behaviourally against get_monitoring_data() in
+     * MonitoringAuthorizationTest.
      */
-    public function testMonitoringSetupDifferentiatesAdminQueries(): void
+    public function testMonitoringSetupIsDisabledAndPerformsNoWork(): void
     {
-        $content = file_get_contents(dirname(__DIR__) . '/src/monitoring_setup.php');
-        $this->assertStringContainsString("ima == 'admin'", $content);
-        $this->assertStringContainsString('monitoring_custid', $content);
+        require_once __DIR__ . '/Stubs.php';
+        require_once dirname(__DIR__) . '/src/monitoring_setup.php';
+
+        FrameworkState::reset();
+        FrameworkState::$ima = 'admin';
+        FrameworkState::$request = ['id' => '7', 'custid' => '999'];
+
+        $this->assertFalse(monitoring_setup(), 'monitoring_setup() is disabled and must return false');
+        $this->assertSame([], RecordingDb::$queries, 'a disabled page must not query the database');
+        $this->assertSame([], FrameworkState::$output, 'a disabled page must not render output');
+        $this->assertSame([], FrameworkState::$titles, 'a disabled page must not set a page title');
     }
 }
